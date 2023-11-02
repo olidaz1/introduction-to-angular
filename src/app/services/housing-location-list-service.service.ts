@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HousingLocation } from '../housing-location';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -36,12 +37,14 @@ export class HousingLocationListServiceService {
       laundry: false,
     }
   ];
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getHousingLocationList() : Observable<Array<HousingLocation>> {
-    return new Observable<Array<HousingLocation>>(observer => {
-      observer.next(this.housingLocationList);
-      observer.complete();
-    });
+    return this.http.get<HousingLocation[]>('http://localhost:8000/housinglist');
+    
+    // return new Observable<Array<HousingLocation>>(observer => {
+    //   observer.next(this.housingLocationList);
+    //   observer.complete();
+    // });
   }
 }
